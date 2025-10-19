@@ -2,16 +2,19 @@ NAME = MutantStack
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp
+SRC = main.cpp 
 OBJ = $(SRC:.cpp=.o)
+DEP = $(OBJ:.o=.d)
+
+all: $(NAME)
+
+-include ${DEP}
 
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -MMD -c $< -o $@
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-
-all: $(NAME)
 
 clean:
 	rm -f $(OBJ)
